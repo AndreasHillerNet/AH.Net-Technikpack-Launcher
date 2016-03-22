@@ -9,7 +9,8 @@ uses
   AdvToolBarStylers, AdvMenuStylers, AdvOfficePager, AdvOfficePagerStylers,
   pngimage, ExtCtrls, AdvGlowButton, cefvcl,ceflib, ActnList, WinXP, WebCopy,AdvStyleIF,
   urlmon, ConsoleIO, ZipMstr, CoolTrayIcon, AdvMemo, AdvPanel, AdvNavBar,
-  FileCtrl, FlCtrlEx, AdvSplitter, AdvmWS, Buttons, AdvFindDialogForm, jpeg;
+  FileCtrl, FlCtrlEx, AdvSplitter, AdvmWS, Buttons, AdvFindDialogForm, jpeg,
+  OleCtrls, SHDocVw, JvComponentBase, JvCreateProcess;
 
 type
   TmainFrm = class(TForm)
@@ -140,7 +141,8 @@ type
     filebeopen: TLabel;
     AdvMemoFindDialog1: TAdvMemoFindDialog;
     AdvFindDialog1: TAdvFindDialog;
-    Image2: TImage;
+    WebBrowser1: TWebBrowser;
+    JvCreateProcess1: TJvCreateProcess;
     procedure FormCreate(Sender: TObject);
     procedure configActionExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -166,6 +168,8 @@ type
     procedure FileListBoxEx1DblClick(Sender: TObject);
     procedure AdvToolBarButton12Click(Sender: TObject);
     procedure AdvToolBarButton20Click(Sender: TObject);
+    procedure installMCSActionExecute(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -178,7 +182,7 @@ var
 
 implementation
 
-uses settings, activatemods, info;
+uses settings, activatemods, info, buildwebserver;
 
 {$R *.dfm}
 
@@ -411,7 +415,7 @@ begin
   memo1.Lines.Clear;
   memo1.Lines.Add(starter);
   memo1.Lines.SaveToFile(config[2]+'\starter.bat');
-  advOfficePager1.ActivePageIndex:=2;
+  advOfficePager1.ActivePageIndex:=1;
   consoleio1.RunProcess(config[2]+'\starter.bat',config[2],false);
 end;
 
@@ -422,7 +426,7 @@ var
   modlistfile: String;
   hash, path, url: String;
 begin
-  AdvOfficePager1.ActivePageIndex:=2;
+  AdvOfficePager1.ActivePageIndex:=1;
 
   // '['+DateToStr(now)+', '+TimeToStr(now)+'] '
   console.Lines.Add('['+TimeToStr(now)+'] [Launcher] Installing Minecraft with the AH.Net Technik Modpack');
@@ -577,6 +581,16 @@ end;
 procedure TmainFrm.AdvToolBarButton20Click(Sender: TObject);
 begin
   AdvMemoFindDialog1.Execute;
+end;
+
+procedure TmainFrm.installMCSActionExecute(Sender: TObject);
+begin
+  makeAServerFrm.showModal;
+end;
+
+procedure TmainFrm.FormActivate(Sender: TObject);
+begin
+  Webbrowser1.Navigate('http://technikpack.andreashiller.net/launcherwelcome.php');
 end;
 
 end.

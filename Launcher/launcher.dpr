@@ -8,7 +8,8 @@ uses
   settings in 'settings.pas' {configFrm},
   activatemods in 'activatemods.pas' {activateModsFrm},
   info in 'info.pas' {infoFrm},
-  splash in 'splash.pas' {splashFrm};
+  splash in 'splash.pas' {splashFrm},
+  buildwebserver in 'buildwebserver.pas' {makeAServerFrm};
 
 {$R *.res}
 
@@ -24,6 +25,7 @@ begin
   Application.CreateForm(TconfigFrm, configFrm);
   Application.CreateForm(TactivateModsFrm, activateModsFrm);
   Application.CreateForm(TinfoFrm, infoFrm);
+  Application.CreateForm(TmakeAServerFrm, makeAServerFrm);
   setDelay(3000);
     splashFrm.Hide;
   finally
